@@ -1,0 +1,25 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="pokemon-db">
+        <class>com.teksystems.pokemon.database.entity.Locations</class>
+        <class>com.teksystems.pokemon.database.entity.Pokemons</class>
+        <class>com.teksystems.pokemon.database.entity.TrainerPokemon</class>
+        <class>com.teksystems.pokemon.database.entity.Trainers</class>
+        <class>com.teksystems.pokemon.database.entity.Users</class>
+        <!--<class>jpa.entitymodels.Student</class>
+        <class>jpa.entitymodels.Course</class>
+        <class>jpa.entitymodels.StudentCourse</class>-->
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/pokemon-db"/>
+            <property name="hibernate.hdm2ddl.auto" value="validate"/>
+
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="root"/>
+        </properties>
+    </persistence-unit>
+</persistence>
