@@ -19,10 +19,10 @@ public class TrainerPokemon {
     @Column(name = "is_currently_assigned", nullable = false)                           Boolean isCurrentlyAssigned;
     @Column(name = "trainer_id", nullable = false)                                      Integer trainerId;
     @Column(name = "pokemon_id", nullable = false)                                      Integer pokemonId;
-    /*@Transient
-    @ManyToOne
+
+    /*@ManyToOne
     @JoinColumn(name = "trainer_id", referencedColumnName = "id", nullable = false)     Trainers trainersByTrainerId;
-    @Transient
+
     @ManyToOne
     @JoinColumn(name = "pokemon_id", referencedColumnName = "id", nullable = false)     Pokemons pokemonsByPokemonId;*/
 }

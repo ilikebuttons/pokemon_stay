@@ -11,6 +11,7 @@
             dropdown.style.display = "none";
         }
     });
+    //TODO convert to JQuery
 </script>
 
 </html>

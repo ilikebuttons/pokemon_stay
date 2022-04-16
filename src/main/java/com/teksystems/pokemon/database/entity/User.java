@@ -5,14 +5,12 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Objects;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

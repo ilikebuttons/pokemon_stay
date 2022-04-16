@@ -2,18 +2,15 @@ package com.teksystems.pokemon.database.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Objects;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 @Entity
 @Table(name = "locations")
-public class Locations {
+public class Location {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
