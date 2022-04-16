@@ -1,0 +1,24 @@
+ErrorController
+404
+500
+
+
+
+
+
+
+
+
+
+
+
+
+extra fields
+==========================
+createDate
+
+
+
+candidates for service
+==========================
+calculating % chance to catch

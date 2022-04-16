@@ -45,7 +45,7 @@ public class UserController {
 
         if (bindingResult.hasErrors()) {
 
-            List<String> errorMessages = new ArrayList<>();
+            List<String> errorMessages = new ArrayList<>(); //TODO: show errors in JSP
 
             for (ObjectError error : bindingResult.getAllErrors()) {
                 log.info( ((FieldError)error).getField() + " " +  error.getDefaultMessage());
@@ -61,7 +61,6 @@ public class UserController {
             response.setViewName("user/register");
             return response;
         }
-
 
         // try to load user from DB using id on form (edit)
         User user = userDao.findById(form.getId());
@@ -87,13 +86,12 @@ public class UserController {
         return response;
     }
 
-    // Edit user, populate form using ID
-    // @RequestMapping(value = "/user/edit/{userId}", method = {RequestMethod.GET, RequestMethod.POST})
     @GetMapping(value = "/user/edit/{userId}")
     public ModelAndView editUser(@PathVariable("userId") Integer userId) throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/register");
 
+        // Populate form using ID
         User user = userDao.findById(userId);
         RegisterFormBean form = new RegisterFormBean();
 
@@ -112,10 +110,10 @@ public class UserController {
     public ModelAndView search(@RequestParam(required = false) String searchTeamName) {
         ModelAndView response = new ModelAndView();
 
-        // Set the View
+        // Set View
         response.setViewName("user/search"); // Project Directory
 
-        // Create the Model
+        // Create Model
         List<User> users = new ArrayList<>();
 
         // Validate Input
@@ -123,7 +121,7 @@ public class UserController {
 
             // Query
             users = userDao.findByTeamNameIgnoreCaseContaining(searchTeamName);
-        }
+        }   //TODO else?
 
         // Add users to model
         response.addObject("users", users);

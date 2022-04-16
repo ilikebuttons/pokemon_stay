@@ -7,7 +7,7 @@
 
 <form <%--action="/user/search" method="get" --%>>
 
-    <input type="text" name="searchFirstName" id="searchBoxId" placeholder="Search..." value="${searchFirstName}">
+    <input type="text" name="searchTeamName" id="searchBoxId" placeholder="Search..." value="${searchTeamName}">
     <br><br><br>
 
     <button id="searchId" type="submit">Search</button>
