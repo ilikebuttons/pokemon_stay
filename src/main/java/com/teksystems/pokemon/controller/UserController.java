@@ -1,8 +1,12 @@
 package com.teksystems.pokemon.controller;
 
+import com.teksystems.pokemon.database.dao.UserRoleDAO;
+import com.teksystems.pokemon.database.entity.UserRole;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -15,15 +19,29 @@ import com.teksystems.pokemon.formbean.RegisterFormBean;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
 @Controller
+//@PreAuthorize("hasAnyAuthority('PLAYER','ADMIN')")
 public class UserController {
 
     @Autowired
     private UserDAO userDao;
+
+    @Autowired
+    private UserRoleDAO userRoleDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @RequestMapping(value = "/user/login", method = RequestMethod.GET)
+    public ModelAndView login() throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        response.setViewName("/user/login");
+        return response;
+    }
 
     @RequestMapping(value = "/user/register", method = RequestMethod.GET)
     public ModelAndView register() throws Exception {
@@ -45,7 +63,7 @@ public class UserController {
 
         if (bindingResult.hasErrors()) {
 
-            List<String> errorMessages = new ArrayList<>(); //TODO: show errors in JSP
+            //List<String> errorMessages = new ArrayList<>(); //TODO: show errors in JSP
 
             for (ObjectError error : bindingResult.getAllErrors()) {
                 log.info( ((FieldError)error).getField() + " " +  error.getDefaultMessage());
@@ -62,7 +80,7 @@ public class UserController {
             return response;
         }
 
-        // try to load user from DB using id on form (edit)
+        // retreive user by id from hidden form element (edit)
         User user = userDao.findById(form.getId());
 
         // if no id found, new user (create)
@@ -73,10 +91,16 @@ public class UserController {
         // create and save user
         user.setEmail(form.getEmail());
         user.setTeamName(form.getTeamName());
-        user.setPassword(form.getPassword());
         user.setCoins(1000);
-
+        user.setPassword(passwordEncoder.encode(form.getPassword()));
         userDao.save(user);
+
+        // create and save the user role object
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getId());
+        userRole.setUserRole("PLAYER");
+        userRoleDao.save(userRole);
+
 
         log.info(form.toString());
 
@@ -106,6 +130,7 @@ public class UserController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user/search")
     public ModelAndView search(@RequestParam(required = false) String searchTeamName) {
         ModelAndView response = new ModelAndView();
