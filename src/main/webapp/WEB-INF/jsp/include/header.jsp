@@ -1,4 +1,5 @@
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +46,8 @@
 
             <sec:authorize access="isAuthenticated()">
                 <li><a href="/user/logout">Logout</a></li>
-                <li><sec:authentication property="principal.username" /></li>
+                <%--<li><sec:authentication property="principal.username" /></li>--%>
+                <li>${param.teamName}</li>
             </sec:authorize>
         </ul>
     </nav>
