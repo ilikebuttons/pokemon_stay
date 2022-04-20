@@ -1,13 +1,15 @@
 package com.teksystems.pokemon.database.entity;
 
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "pokemons")
 public class Pokemon {

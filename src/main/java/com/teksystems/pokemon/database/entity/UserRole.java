@@ -7,6 +7,9 @@ import javax.persistence.*;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user_roles")
 public class UserRole {
