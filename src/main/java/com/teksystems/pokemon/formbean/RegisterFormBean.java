@@ -1,23 +1,29 @@
 package com.teksystems.pokemon.formbean;
 
+import com.teksystems.pokemon.validation.EmailUnique;
+import com.teksystems.pokemon.validation.MatchingFields;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@MatchingFields(f1Name = "password", f2Name = "confirmPassword", message = "Passwords must match")
 public class RegisterFormBean {
 
     // Null if creating, populated with userId if editing
     Integer Id;
 
-    @Pattern(regexp = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}", message = "Invalid email format") // works after changing input type from email to text
+    @EmailUnique(message = "Email already exists in database")
+    @Email(message = "Invalid email format")
     @NotBlank(message = "Email is required")
     String email;
 

@@ -35,6 +35,7 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    // LOGIN
     @RequestMapping(value = "/user/login", method = RequestMethod.GET)
     public ModelAndView login() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -43,6 +44,7 @@ public class UserController {
         return response;
     }
 
+    // REGISTER
     @RequestMapping(value = "/user/register", method = RequestMethod.GET)
     public ModelAndView register() throws Exception {
         ModelAndView response = new ModelAndView();
@@ -55,6 +57,7 @@ public class UserController {
         return response;
     }
 
+    // REGISTER_SUBMIT
     @RequestMapping(value = "/user/registerSubmit", method = RequestMethod.POST)
     public ModelAndView registerSubmit(@Valid RegisterFormBean form, BindingResult bindingResult) throws Exception {
         ModelAndView response = new ModelAndView();
@@ -80,7 +83,7 @@ public class UserController {
             return response;
         }
 
-        // retreive user by id from hidden form element (edit)
+        // retreive user by id from hidden form element (edit) //TODO
         User user = userDao.findById(form.getId());
 
         // if no id found, new user (create)
@@ -101,15 +104,13 @@ public class UserController {
         userRole.setUserRole("PLAYER");
         userRoleDao.save(userRole);
 
+        //TODO autologin after register
 
-        log.info(form.toString());
-
-        // redirect to edit page (redirect: navigates to url instead of view name)
-        response.setViewName("redirect:/user/edit/" + user.getId());
-
+        response.setViewName("redirect:/game/");
         return response;
     }
 
+    // EDIT
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/user/edit/{userId}")
     public ModelAndView editUser(@PathVariable("userId") Integer userId) throws Exception {
@@ -131,6 +132,7 @@ public class UserController {
         return response;
     }
 
+    // SEARCH
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user/search")
     public ModelAndView search(@RequestParam(required = false) String searchTeamName) {

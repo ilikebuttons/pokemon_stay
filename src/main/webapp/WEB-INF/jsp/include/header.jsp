@@ -1,5 +1,4 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +20,10 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../../pub/css/header.css">
+    <link rel="stylesheet" href="../../../pub/css/footer.css">
+    <link rel="stylesheet" href="../../../pub/css/game.css">
+    <link rel="stylesheet" href="../../../pub/css/slider.css">
+    <link rel="stylesheet" href="../../../pub/css/register.css">
 </head>
 
 <body>
