@@ -26,13 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/admin/**", "/user/search").authenticated()  // must be logged in
+                .antMatchers("/admin/**", "/user/search", "/game/**").authenticated()  // must be logged in
                 .antMatchers("/pub/**", "/error/**", "/index", "/user/**").permitAll()
                 .and()
             .formLogin()
                 .loginPage("/user/login")                      // url to log in
                 .loginProcessingUrl("/user/loginSubmit")       // url to send form data for login attempt
-                //.defaultSuccessUrl("")
+                .defaultSuccessUrl("/game")
                 .and()
             .logout()
                 .invalidateHttpSession(true)

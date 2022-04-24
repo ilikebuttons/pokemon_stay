@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
@@ -21,10 +22,8 @@ public class User {
     @Column(name = "email", nullable = false, length = 45)          String email;
     @Column(name = "password", nullable = false, length = 45)       String password;
     @Column(name = "coins", nullable = false)                       Integer coins;
-/*
-    @Transient
-    @OneToMany(mappedBy = "usersByUserId")                          Collection<Pokemons> pokemonsById;
 
     @Transient
-    @OneToMany(mappedBy = "usersByUserId")                          Collection<Trainers> trainersById;*/
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Trainer> trainers;
 }

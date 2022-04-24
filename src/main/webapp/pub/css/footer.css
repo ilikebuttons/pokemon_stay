@@ -1,0 +1,17 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+    overflow: hidden;
+    height: 42px;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0 8px 1px var(--main);
+
+    background-color: purple;
+}

@@ -16,13 +16,17 @@ body {
 }
 
 header {
+    /*position: fixed;*/
+    /*top: 0;
+    width: 100%;*/
+    font-size: 1.4em;
     overflow: hidden;
     height: 42px;
     display: flex;
     justify-content: flex-end;
     flex-wrap: nowrap;
     align-items: center;
-    padding: 10px 20px;
+    padding: 5px 20px;
     box-shadow: 0 1px 8px var(--main);
 }
 

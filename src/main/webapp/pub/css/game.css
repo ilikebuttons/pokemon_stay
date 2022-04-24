@@ -1,0 +1,40 @@
+.content {
+    display: flex;
+    margin: 20px;
+}
+
+.content ul {
+    list-style: none;
+}
+
+
+#mapImg {
+    position: relative;
+    z-index: 1;
+}
+
+#map {
+    position: absolute;
+    z-index: 2;
+    opacity: 1.0;
+    fill-opacity: 0;
+}
+
+#map .cursor {
+    stroke: #6AFF56;
+    stroke-width: 3px;
+    fill-opacity: .4;
+}
+
+.content ul li {
+
+}
+
+/*
+.content {
+    overflow: scroll;
+    position: fixed;
+    top: 80px;
+    !*height: auto;*!
+}
+*/

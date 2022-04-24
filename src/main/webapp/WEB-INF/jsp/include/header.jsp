@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pok&#233;mon Stay</title>
+    <link rel="icon" type="image/png" href="../../../pub/images/favicon.png">
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -27,32 +28,33 @@
 </head>
 
 <body>
-
-<header>
-    <h1 class="fa fa-caret-down" id="nav-title">Pok&#233;mon Stay</h1>
-    <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
-    </div>
-
-    <nav>
-        <ul>
-            <sec:authorize access="hasAuthority('ADMIN')">
-                <li><a href="/user/search">Search</a></li>
-            </sec:authorize>
-
-            <sec:authorize access="!isAuthenticated()">
-                <li><a href="/user/register">Register</a></li>
-                <li><a href="/user/login">Login</a></li>
-            </sec:authorize>
-
+    <header class="header">
+        <h1 class="fa fa-caret-down" id="nav-title">Pok&#233;mon Stay</h1>
+        <div class="dropdown-content">
+            <a href="#">Messages</a>
+            <a href="#">Settings</a>
             <sec:authorize access="isAuthenticated()">
-                <li><a href="/user/logout">Logout</a></li>
-                <%--<li><sec:authentication property="principal.username" /></li>--%>
-                <li>${param.teamName}</li>
+                <a href="/user/logout">Log Out</a>
             </sec:authorize>
-        </ul>
-    </nav>
-</header>
+        </div>
+
+        <nav>
+            <ul>
+                <sec:authorize access="hasAuthority('ADMIN')">
+                    <li><a href="/user/search">Search</a></li>
+                    <li><a href="/game/trainers">Trainers</a></li>
+                </sec:authorize>
+
+                <sec:authorize access="!isAuthenticated()">
+                    <li><a href="/user/register">Register</a></li>
+                    <li><a href="/user/login">Login</a></li>
+                </sec:authorize>
+
+                <sec:authorize access="isAuthenticated()">
+                    <li><img src="../../../pub/images/pokecoin.png" width="24px" height="24px" alt=""> ${param.coins}</li>
+                    <li>${param.teamName}</li>
+                </sec:authorize>
+            </ul>
+        </nav>
+    </header>
 <br><br><br>

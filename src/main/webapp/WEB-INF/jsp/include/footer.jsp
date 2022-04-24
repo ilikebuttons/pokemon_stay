@@ -1,4 +1,6 @@
 
+<%--<div class="footer">My footer</div>--%>
+<%--<a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokemon icons created by Nikita Golubev - Flaticon</a>--%>
 </body>
 
 <script>
@@ -11,7 +13,23 @@
             dropdown.style.display = "none";
         }
     });
-    //TODO convert to JQuery
+
+    //TODO
+    /*$(document).ready(() => {
+
+        // Show
+        $("#nav-title").click(() => {
+            $(this).find(".dropdown-menu").slideToggle("fast");
+        });
+    });
+    $(document).on("click", (e) => {
+        let $trigger = $(".dropdown");
+        if ($trigger !== e.target && !$trigger.has(e.target).length) {
+            $(".dropdown-menu").slideUp("fast");
+        }
+    });*/
+
+
 </script>
 
 </html>
