@@ -1,34 +1,27 @@
 package com.teksystems.pokemon.formbean;
 
-import com.teksystems.pokemon.validation.EmailUnique;
-import com.teksystems.pokemon.validation.MatchingFields;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@MatchingFields(f1Name = "password", f2Name = "confirmPassword", message = "Passwords must match")
-public class RegisterFormBean {
+@ToString
+public class LocationFormBean {
 
     // Null if creating, populated with userId if editing
     Integer Id;
 
-    @EmailUnique(message = "Email already registered")
-    @Email(message = "Invalid email format")
+    @Pattern(regexp = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}", message = "Invalid email format") // works after changing input type from email to text
     @NotBlank(message = "Email is required")
-    String email;
+    String name;
 
     @NotBlank(message = "Choose a name for your team!")
-    String teamName;
+    String description;
 
     @Length(min = 8, message = "Password must be at least 8 characters")
     @Length(max = 20, message = "Password can't be more than 20 characters")

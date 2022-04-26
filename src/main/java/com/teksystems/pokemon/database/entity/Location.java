@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
@@ -22,6 +23,11 @@ public class Location {
     @Column(name = "difficulty_level", nullable = false)            Integer difficultyLevel;
     @Column(name = "coordinates")                                   String coordinates;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Transient
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<TrainerLocation> trainerLocations;
 /*    @Transient
     @OneToMany(mappedBy = "locationsByLocationId")              Collection<Pokemons> pokemonsById;
     @Transient

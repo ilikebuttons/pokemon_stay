@@ -19,18 +19,24 @@ public class Trainer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id", nullable = false)                                 Integer id;
+    @Column(name = "id", nullable = false)                                  Integer id;
     @Column(name = "name", nullable = false, length = 20)                   String name;
     @Column(name = "image_url", nullable = true, length = 255)              String imageUrl;
-    @Column(name = "location_id", nullable = true)                          Integer locationId;
+    //@Column(name = "location_id", nullable = true)                          Integer locationId;
+
+    //@JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(mappedBy = "trainer")
+    TrainerLocation trainerLocation;
 
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)                         User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    User user;
 
-    //@Transient
-    @OneToMany(mappedBy = "trainer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "trainer", fetch = FetchType.LAZY /*, cascade = CascadeType.ALL*/)
     Set<Pokemon> pokemons;
 }

@@ -1,5 +1,6 @@
 package com.teksystems.pokemon.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,14 +21,13 @@ public class Pokemon {
     @Column(name = "index", nullable = false)                           Integer index;
     @Column(name = "name", nullable = false, length = 12)               String name;
     @Column(name = "level", nullable = false)                           Integer level;
-    @Column(name = "image_url", nullable = true, length = 255)          String imageUrl;
     @Column(name = "location_id", nullable = true)                      Integer locationId;
     @Column(name = "user_id", nullable = true)                          Integer userId;
-    /*@Transient
-    @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id")      Locations locationsByLocationId;
-    @Transient
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")          Users usersByUserId;
-    @OneToMany(mappedBy = "pokemonsByPokemonId")                        Collection<TrainerPokemon> trainerPokemonsById;*/
+
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "trainer_id", nullable = false)
+    Trainer trainer;
 }

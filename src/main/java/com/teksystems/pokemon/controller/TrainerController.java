@@ -32,14 +32,14 @@ public class TrainerController {
     private TrainerDAO trainerDao;
 
     @RequestMapping(value = "/game/trainers", method = RequestMethod.GET)
-    public ModelAndView conversation() throws Exception {
+    public ModelAndView create() throws Exception {
         ModelAndView response= new ModelAndView();
         response.setViewName("game/trainers");
         return response;
     }
 
     @RequestMapping(value = "/game/trainers/create", method = RequestMethod.POST)
-    public ModelAndView uploadPost(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) throws Exception {
+    public ModelAndView submitTrainer(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) throws Exception {
         ModelAndView response = new ModelAndView();
 
         log.info("name: " + name + "\nuploaded file = " + file.getOriginalFilename() + " size = " + file.getSize());
@@ -72,6 +72,7 @@ public class TrainerController {
         List<Trainer> trainers = trainerDao.findByUserId(user.getId());
         String payload = mapper.writeValueAsString(trainers);
 
+        log.info(payload);
         return new ResponseEntity(payload, HttpStatus.OK);
     }
 }

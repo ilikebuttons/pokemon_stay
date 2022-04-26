@@ -11,15 +11,19 @@
         const theMap = document.querySelector('#map');
         for (const area of areas) {
             const path = document.createElementNS('http://www.w3.org/2000/svg',"path");
-            path.id = "loc_" + (area.index + 1);
-            path.classList.add('area');
+            path.dataset.name = area.name;
+            path.dataset.index = area.id;
+            path.classList.add('area', 'dropzone');
             path.setAttributeNS(null, "d", "M " + area.coordinates + " Z");
-            path.addEventListener("mouseenter", () => {
+            path.addEventListener("dragstart", (e) => {
+                e.dataTransfer.setData('text/plain', null)
+            })
+            /*path.addEventListener("mouseenter", () => {
                 path.classList.add('cursor');
             })
             path.addEventListener("mouseleave", () => {
                 path.classList.remove('cursor');
-            })
+            })*/
             theMap.appendChild(path);
         }
     }

@@ -1,0 +1,39 @@
+{
+  "id": 2,
+  "status": "exploring",
+  "progress": 1.0,
+  "pokeballs": 4,
+  "potions": 4,
+  "trainer": {
+    "id": 1,
+    "name": "Ash",
+    "imageUrl": "c:/dev/uploads/trainers/Ash.png",
+    "trainerLocation": null,
+    "pokemons": [
+      {
+        "id": 5,
+        "index": 25,
+        "name": "Pikachu",
+        "level": 14,
+        "locationId": null,
+        "userId": 1
+      },
+      {
+        "id": 6,
+        "index": 10,
+        "name": "Caterpie",
+        "level": 8,
+        "locationId": null,
+        "userId": 1
+      }
+    ]
+  },
+  "location": {
+    "id": 8,
+    "name": "Route 25",
+    "description": "hill grass water",
+    "difficultyLevel": null,
+    "coordinates": "623,45, 623,1, 840,0, 840,45",
+    "trainerLocations": null
+  }
+}
