@@ -5,8 +5,8 @@
 
 <script>
     let dropdown = document.querySelector('.dropdown-content');
-    let title = document.querySelector('#nav-title');
-    title.addEventListener("click", () => {
+    let title = document.querySelector('.fa-caret-down');
+    title.addEventListener("click", (e) => {
         if (dropdown.style.display !== "block") {
             dropdown.style.display = "block";
         } else {
@@ -14,6 +14,20 @@
         }
     });
 
+    const dmCheckEle = document.querySelector(".dmcheck");
+    dmCheckEle.addEventListener("change", (e) => {
+        console.log(dmCheckEle.checked);
+        if (dmCheckEle.checked) {
+            document.documentElement.style.setProperty('--bg', 'rgb(12, 13, 28);');
+            document.documentElement.style.setProperty('--main', 'white');
+        } else {
+            document.documentElement.style.setProperty('--bg', 'white');
+            document.documentElement.style.setProperty('--main', 'rgb(12, 13, 28);');
+        }
+    });
+
+
+    //document.documentElement.style.setProperty('--your-variable', '#YOURCOLOR');
     //TODO
     /*$(document).ready(() => {
 

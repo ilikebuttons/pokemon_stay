@@ -33,21 +33,12 @@
 
 <body>
     <header class="header" ondragstart="return false">
-        <h1 class="fa fa-caret-down" id="nav-title">Pok&#233;mon Stay</h1>
-        <div class="dropdown-content">
-            <a href="#">Messages</a>
-            <a href="#">Settings</a>
-            <sec:authorize access="isAuthenticated()">
-                <a href="/user/logout">Log Out</a>
-            </sec:authorize>
-        </div>
-
+        <a href="/game" id="nav-title">Pok&#233;mon Stay</a>
         <nav>
             <ul>
                 <sec:authorize access="hasAuthority('ADMIN')">
                     <li><a href="/user/search">Users</a></li>
                     <li><a href="/admin/locations">Locations</a></li>
-                    <li><a href="/game/trainers">Trainers</a></li>
                 </sec:authorize>
 
                 <sec:authorize access="!isAuthenticated()">
@@ -56,8 +47,20 @@
                 </sec:authorize>
 
                 <sec:authorize access="isAuthenticated()">
+                    <li><a href="/game/trainers">Trainers</a></li>
                     <li><img src="../../../pub/images/pokecoin.png" width="24px" height="24px" alt=""> ${param.coins}</li>
-                    <li>${param.teamName}</li>
+                    <li class="fa fa-caret-down">${param.teamName}
+                        <div class="dropdown-content">
+                            <a href="#">Messages</a>
+                            <a style="display:inline-block" href="#">
+                                <input class="dmcheck" type="checkbox" checked>
+                                Dark Mode
+                            </a>
+                            <sec:authorize access="isAuthenticated()">
+                                <a href="/user/logout">Log Out</a>
+                            </sec:authorize>
+                        </div>
+                    </li>
                 </sec:authorize>
             </ul>
         </nav>

@@ -67,13 +67,14 @@
                 $('#trainers').append(
                     trainers.map(trainer =>
                         $(`
-                            <div>
-                                <h3>
-                                    <span class="trainer draggable"
-                                        data-index="\${trainer.id}"
-                                        data-name="\${trainer.name}"
-                                        draggable="true">\${trainer.name}
-                                    </span> -
+                            <div class="trainer draggable"
+                                 style="margin-top: 20px;"
+                                 data-index="\${trainer.id}"
+                                 data-name="\${trainer.name}"
+                                 draggable="true">
+
+                                <h3 style="margin: 0px">
+                                    <span>\${trainer.name}</span> -
                                     <span>
                                         \${trainer.trainerLocation ? trainer.trainerLocation.status.toUpperCase()
                                             + ' @ ' + trainer.trainerLocation.location.name : "WORKING @ Headquarters"}
@@ -82,7 +83,14 @@
                             </div>
                         `).append(
                             trainer.pokemons.map(pokemon =>
-                                $(`<li style="padding-left: 10px;">\${pokemon.name}</li>`)
+                                $(`
+                                    <ul style="display: inline-block">
+
+                                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\${pokemon.index}.png" />
+                                        <li style="padding-left: 20px; margin-bottom: 10px">\${pokemon.name}</li>
+                                    </ul>
+
+                                `)
                             )
                         )
                     )
@@ -178,7 +186,7 @@
             },
             error: (request, error) => {
                 // TODO professor oak error handler
-                console.log(request)
+                console.log(error)
             }
         });
     };

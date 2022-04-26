@@ -52,7 +52,6 @@ header a:hover {
 #nav-title {
     margin-right: auto;
     font-size: 1.5em;
-    cursor: pointer;
 }
 
 /* The dropdown container */
@@ -82,7 +81,7 @@ header a:hover {
 .dropdown-content {
     display: none;
     position: absolute;
-    left: 0;
+    right: 5px;
     top: 52px;
     background-color: #f9f9f9;
     min-width: 160px;
@@ -92,14 +91,14 @@ header a:hover {
 
 /* Links inside the dropdown */
 .dropdown-content a {
-    width: 100px;
+    width: 200px;
     height: 50px;
     float: none;
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    text-align: left;
+    text-align: right;
 }
 
 /* Add a grey background color to dropdown links on hover */
@@ -110,4 +109,9 @@ header a:hover {
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.dmcheck {
+    width: 25px;
+    height: 25px;
 }

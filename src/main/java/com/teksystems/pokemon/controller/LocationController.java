@@ -90,7 +90,6 @@ public class LocationController {
         // in this case we are adding the RegisterFormBean to the model
         response.addObject("form", form);
 */
-
         return response;
     }
 
