@@ -22,7 +22,7 @@
   children[7].style.left=value+'%';children[11].style.left=value+'%';
   children[11].childNodes[1].innerHTML=this.value;" />
 
-    <input type="range" value="100" max="100" min="0" step="1" oninput="
+<input type="range" value="100" max="100" min="0" step="1" oninput="
   this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-1));
   let value = (this.value/parseInt(this.max))*100
   var children = this.parentNode.childNodes[1].childNodes;

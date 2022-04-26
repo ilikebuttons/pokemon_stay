@@ -45,7 +45,8 @@
         <nav>
             <ul>
                 <sec:authorize access="hasAuthority('ADMIN')">
-                    <li><a href="/user/search">Search</a></li>
+                    <li><a href="/user/search">Users</a></li>
+                    <li><a href="/admin/locations">Locations</a></li>
                     <li><a href="/game/trainers">Trainers</a></li>
                 </sec:authorize>
 

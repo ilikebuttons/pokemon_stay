@@ -15,9 +15,12 @@
             path.dataset.index = area.id;
             path.classList.add('area', 'dropzone');
             path.setAttributeNS(null, "d", "M " + area.coordinates + " Z");
-            path.addEventListener("dragstart", (e) => {
+            /*path.addEventListener("dragstart", (e) => {
                 e.dataTransfer.setData('text/plain', null)
-            })
+            })*/
+            /*path.addEventListener("click", (e) => {
+                e.dataTransfer.setData('text/plain', null)
+            })*/
             /*path.addEventListener("mouseenter", () => {
                 path.classList.add('cursor');
             })

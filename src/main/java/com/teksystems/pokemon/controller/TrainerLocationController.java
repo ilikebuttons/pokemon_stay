@@ -98,7 +98,7 @@ public class TrainerLocationController {
 
         if (errors.size() > 0) {
             return ResponseEntity
-                    .status(HttpStatus.OK)
+                    .status(HttpStatus.BAD_REQUEST)
                     .body(mapper.writeValueAsString(errors));
         }
 
@@ -117,6 +117,4 @@ public class TrainerLocationController {
                 .status(HttpStatus.OK)
                 .body(mapper.writeValueAsString(tl));
     }
-
-
 }

@@ -34,18 +34,7 @@
             success: (data) => {
                 const tLocs = JSON.parse(data);
                 console.log(tLocs);
-                $.ajax({
-                    url: '/game/getTrainerLocations',
-                    type: 'GET',
-                    data: {},
-                    success: (data) => {
-                        const tLocs = JSON.parse(data);
-                        console.log(tLocs);
-                    },
-                    error: (request, error) => {
-                        console.log("error = " + error + "  " + request)
-                    }
-                });
+                // TODO show where trainers are on map
                /* $('#tLocEle').append(
                     tLocs.map(tl =>
                         $(`
@@ -78,23 +67,22 @@
                 $('#trainers').append(
                     trainers.map(trainer =>
                         $(`
-
-                            <li class="trainer draggable"
-                                data-index="\${trainer.id}"
-                                data-name="\${trainer.name}"
-                                draggable="true">\${trainer.name}
-                            </li>
-
+                            <div>
+                                <h3>
+                                    <span class="trainer draggable"
+                                        data-index="\${trainer.id}"
+                                        data-name="\${trainer.name}"
+                                        draggable="true">\${trainer.name}
+                                    </span> -
+                                    <span>
+                                        \${trainer.trainerLocation ? trainer.trainerLocation.status.toUpperCase()
+                                            + ' @ ' + trainer.trainerLocation.location.name : "WORKING @ Headquarters"}
+                                    </span>
+                                </h3>
+                            </div>
                         `).append(
-
-                            /*`<li style="padding-left: 10px;">\${pokemon.name}</li>` +*/
-
                             trainer.pokemons.map(pokemon =>
-                                $(`
-
-                                    <li style="padding-left: 10px;">\${pokemon.name}</li>
-
-                                `)
+                                $(`<li style="padding-left: 10px;">\${pokemon.name}</li>`)
                             )
                         )
                     )

@@ -28,6 +28,9 @@ public class Location {
     @Transient
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<TrainerLocation> trainerLocations;
+
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY /*, cascade = CascadeType.ALL*/)
+    Set<Generator> generators;
 /*    @Transient
     @OneToMany(mappedBy = "locationsByLocationId")              Collection<Pokemons> pokemonsById;
     @Transient

@@ -32,10 +32,8 @@ public class TrainerLocation {
     @JoinColumn(name = "trainer_id", referencedColumnName = "id")
     Trainer trainer;
 
-    @JsonIgnore         // error at json charcter 8
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    //@JsonIgnore         // error at json charcter 8
+    @ManyToOne(/*fetch = FetchType.LAZY,*/ optional = false)
     @JoinColumn(name = "location_id", nullable = false)
     Location location;
 }
