@@ -4,9 +4,6 @@ import com.teksystems.pokemon.database.dao.LocationDAO;
 import com.teksystems.pokemon.database.entity.Location;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Distance;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -19,20 +16,14 @@ public class LocationService {
     @Autowired
     private LocationDAO locationDao;
 
-    /*public Location getCurrentLocation() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-
-        return locationDao.findByEmail(currentPrincipalName);
-    }*/
-
     public Double calculateDistance(Integer fromId, Integer toId) {
         final Location FROM = locationDao.findById(fromId);
         final Location TO = locationDao.findById(toId);
 
         final Point CENTER_FROM = centroid(parsePointList(FROM.getCoordinates()));
         final Point CENTER_TO = centroid(parsePointList(TO.getCoordinates()));
-        return CENTER_FROM.distance(CENTER_TO);
+
+        return CENTER_FROM.distance(CENTER_TO) / 10;
     }
 
     private List<Point> parsePointList (String stringCoor) {
@@ -52,4 +43,3 @@ public class LocationService {
         return new Point(centroidX / points.size(), centroidY / points.size());
     }
 }
-

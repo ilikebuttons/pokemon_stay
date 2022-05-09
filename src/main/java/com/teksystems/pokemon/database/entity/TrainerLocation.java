@@ -28,7 +28,7 @@ public class TrainerLocation {
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "trainer_id", referencedColumnName = "id")
     Trainer trainer;
 

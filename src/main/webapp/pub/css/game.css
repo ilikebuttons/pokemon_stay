@@ -7,7 +7,6 @@
     list-style: none;
 }
 
-
 #mapImg {
     position: relative;
     z-index: 1;
@@ -42,23 +41,34 @@
 }
 
 .trainer {
+    font-size: 20px;
     /*margin: 0px*/
+    padding: 0;
+    cursor: pointer;
 }
 
-/*
-.ui-li-static.ui-collapsible > .ui-collapsible-heading {
-    margin: 0;
+.returnBtn {
+    border: none;
+    color: var(--accent-to);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
 }
-.ui-li-static.ui-collapsible {
-    padding: 0;
+
+.pokelist {
+    display: flex;
+
+    /*TODO minimized pokelist with pokeballs showing status*/
 }
-.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
-    border-top-width: 0;
+
+.pokelist {
+    /*display: none;*/
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
 }
-.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
-.ui-li-static.ui-collapsible > .ui-collapsible-content {
-    border-bottom-width: 0;
-}*/
 
 /*
 .content {

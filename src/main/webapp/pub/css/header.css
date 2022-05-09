@@ -1,8 +1,8 @@
 :root {
     --bg: rgb(12, 13, 28);
     --main: white;
-    --accent-from: #00ddff;
-    --accent-to: #FFA500;
+    --accent-from: #54d0e8;
+    --accent-to:   rgba(111, 227, 130, 0.89);
 }
 
 html {

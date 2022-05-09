@@ -7,127 +7,65 @@
     Side
 </div>--%>
 
+<%-- IMPORTS --%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/components/pokemons.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/components/trainers.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/components/locations.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/components/adventures.js"></script>
+
 <div class="content">
-    <jsp:include page="./map.jsp"/>
-    <jsp:include page="./assign_to_area.jsp"/>
+    <div id="mapContainer">
+        <svg xmlns="http://www.w3.org/2000/svg" <%--viewBox="0 0 56.69 56.69"--%> id="map" width="920" height="902"></svg>
+        <img id="mapImg" width="920" height="902" src="./../../../pub/images/map.png">
+    </div>
+
+    <%--<jsp:include page="./assign_to_area.jsp"/>--%>
+
+    <div id="assignmentModal" class="modal">
+        <form class="modal-content" id="assignForm">
+
+            <input type="hidden" id="trainerId" name="trainerId">
+            <input type="hidden" id="locationId" name="locationId">
+
+            <span class="close">&times;</span>
+
+            <h2 id="trainerName"></h2>
+            <br>
+            <h3>Pallet Town to <span id="locationName"></span>: <span id="distance"></span></h3>
+            <br>
+            Pokeballs: <input type="number" name="pokeballs" id="pokeballs"/>
+            <br>
+            Potions: <input type="number" name="potions" id="potions"/>
+            <br>
+            <button type="submit" id="submitBtn">"Send On Adventure!"</button>
+            <br>
+        </form>
+
+        <ul id="#errors">
+
+        </ul>
+    </div>
+
     <ul id="trainers"></ul>
+
 </div>
 
 <script>
-
-    const createPokemonList = (pokemons) => {
-        let ul = document.createElement('ul');
-        for (let pokemon of pokemons) {
-            let li = document.createElement('li');
-            li.innerText = pokemon;
-            //li.style.backgroundColor = "rgba(0,255,42,0.48)";
-            ul.append(li);
-        }
-        return ul;
-    };
-
-    const getTrainerLocations = () => {
-        $.ajax({
-            url: '/game/getTrainerLocations',
-            type: 'GET',
-            data: {},
-            success: (data) => {
-                const tLocs = JSON.parse(data);
-                console.log(tLocs);
-                // TODO show where trainers are on map
-               /* $('#tLocEle').append(
-                    tLocs.map(tl =>
-                        $(`
-
-                            <li class="trainer draggable"
-                                data-index="\${trainer.id}"
-                                data-name="\${trainer.name}"
-                                draggable="true">\${trainer.name}
-                            </li>
-
-                        `)
-                    )
-                );*/
-                //setupDragHandlers();
-            },
-            error: (request, error) => {
-                console.log("error = " + error + "  " + request)
-            }
-        });
-    }
-
-    const getTrainers = () => {
-        $.ajax({
-            url: '/getTrainers',
-            type: 'GET',
-            data: {},
-            success: (data) => {
-                const trainers = JSON.parse(data);
-                console.log(trainers);
-                $('#trainers').append(
-                    trainers.map(trainer =>
-                        $(`
-                            <div class="trainer draggable"
-                                 style="margin-top: 20px;"
-                                 data-index="\${trainer.id}"
-                                 data-name="\${trainer.name}"
-                                 draggable="true">
-
-                                <h3 style="margin: 0px">
-                                    <span>\${trainer.name}</span> -
-                                    <span>
-                                        \${trainer.trainerLocation ? trainer.trainerLocation.status.toUpperCase()
-                                            + ' @ ' + trainer.trainerLocation.location.name : "WORKING @ Headquarters"}
-                                    </span>
-                                </h3>
-                            </div>
-                        `).append(
-                            trainer.pokemons.map(pokemon =>
-                                $(`
-                                    <ul style="display: inline-block">
-
-                                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\${pokemon.index}.png" />
-                                        <li style="padding-left: 20px; margin-bottom: 10px">\${pokemon.name}</li>
-                                    </ul>
-
-                                `)
-                            )
-                        )
-                    )
-                );
-                setupDragHandlers();
-            },
-            error: (request, error) => {
-                console.log("error = " + error + "  " + request)
-            }
-        });
-    }
-
+    getMap();
     getTrainers();
-    getTrainerLocations();
+    // TODO ensure getMap and getTrainers execute in order
+
+    //getTrainerLocations();
 </script>
 
 <script>
-    const trainerNameEle = document.querySelector("#trainerName");
-    const modal = document.querySelector("#assignmentModal");
-    const destination = document.querySelector("#locationName");
-    const distanceEle = document.querySelector("#distance");
-    const submitBtn = document.querySelector("#submitBtn");
-    const assignForm = document.querySelector("#assignForm")
-    const closeBtn = document.querySelector(".close");
-    let dragged;
+    let eventHandlersHaveBeenSetup = false;
 
-    // Close Modal
-    const closeModal = () => {
-        modal.style.display = "none";
-        // TODO reset values
-    }
-    closeBtn.addEventListener("click", closeModal);
-    window.onclick = (e) => {
-        if (e.target === modal) {   // works because modal fills the screen
-            closeModal();
-        }
-    }
+    const modal = document.querySelector("#assignmentModal");
+    const assignForm = document.querySelector("#assignForm");
+    const closeBtn = document.querySelector(".close");
+
+    /*const errorListEle = document.querySelector("#errors");*/
 
     const showAssignmentModal = (tName, tId, locName, locId) => {
         $.ajax({
@@ -143,59 +81,78 @@
                 $('#locationName').text(locName);    // non-input
                 $('#locationId').val(locId);
 
-                modal.style.display = "block";
+                $('#assignmentModal').css('display', 'block');
             },
-            error: (request, error) => {
-                console.log("error = " + error + "  " + request)
+            error: (error) => {
+                alert("Trainer must be equipped with at least one Pokeball!")
+                console.log(error)
+                /*for (let errorMsg of error) {
+                    let errorEle = document.createElement("li");
+                    errorEle.innerText = errorMsg;
+                    errorListEle.appendChild(errorEle);
+                }
+                console.log("error = " + error + "  " + request)*/
             }
         });
     }
 
-    /*submitBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        let response = {};
-        let inputs = modal.querySelectorAll('input');
-        console.log(inputs);
-        for (let inputEle of inputs) {
-            response[inputEle.id] = inputEle.value;
-            // TODO reset inputs
-        }
-        console.log(response);
-        closeModal();
-    });*/
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-        const {trainerId, locationId, pokeballs, potions} = Object.fromEntries(formData.entries());
-
-        $.ajax({
-            url: '/game/assignSubmit',
-            type: "POST",
-            data: {
-                "trainerId": trainerId,
-                "locationId": locationId,
-                "pokeballs": pokeballs,
-                "potions": potions
-            },
-            success: (data) => {
-                // TODO show assignment on map
-                console.log(data);
-                closeModal();
-            },
-            error: (request, error) => {
-                // TODO professor oak error handler
-                console.log(error)
-            }
-        });
-    };
-    assignForm.addEventListener("submit", handleSubmit);
+    // DRAG HANDLERS
+    let dragged;
 
     setupDragHandlers = () => {
+        if (eventHandlersHaveBeenSetup === true) return;
+
+        assignForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            //e.stopPropagation();
+
+            const formData = new FormData(e.target);
+            const {trainerId, locationId, pokeballs, potions} = Object.fromEntries(formData.entries());
+
+            $.ajax({
+                url: '/game/assignSubmit',
+                type: "POST",
+                data: {
+                    "trainerId": trainerId,
+                    "locationId": locationId,
+                    "pokeballs": pokeballs ? pokeballs : 0,
+                    "potions": potions ? potions : 0
+                },
+                success: (data) => {
+                    console.log("success");
+                    // TODO show assignment on map
+                    console.log(data);
+                    closeModal();
+                    getTrainers();
+                },
+                error: ({status, responseText}) => {
+                    if (status == 400) {
+                        const errors = JSON.parse(responseText);
+
+                        for (const errorMsg of errors) {
+                            console.log(errorMsg);
+                        }
+                    } else {
+                        console.log("Something went wrong");
+                    }
+                }
+            });
+        });
 
         document.addEventListener("dragstart", (e) => {
-            if (!e.target.classList.contains("trainer")) return false;
+            if (!e.target.classList.contains("trainer")) {
+                e.preventDefault();
+                return false;
+            }
+
+            const pokelist = e.target.nextElementSibling;
+            if (pokelist.style.maxHeight) {
+                pokelist.style.maxHeight = null;
+            }
+            /*if (!pokelist.classList.contains('collapsed')) {
+                pokelist.style.maxHeight = null;
+                pokelist.classList.add('collapsed');
+            }*/
 
             e.dataTransfer.setData('text/plain', null);
             dragged = e.target;
@@ -238,14 +195,14 @@
                 // Trainer
                 let tName = dragged.dataset.name;
                 let tId = dragged.dataset.index;
-                console.log('tName: ' + tName);
-                console.log('tId: ' + tId);
+                //console.log('tName: ' + tName);
+                //console.log('tId: ' + tId);
 
                 // Location
                 let locName = e.target.dataset.name;
                 let locId = e.target.dataset.index;
-                console.log('locName: ' + locName);
-                console.log('locId: ' + locId);
+                //console.log('locName: ' + locName);
+                //console.log('locId: ' + locId);
 
                 showAssignmentModal(tName, tId, locName, locId);
 
@@ -253,7 +210,26 @@
                 //e.target.appendChild( dragged ); //TODO insert trainer pin on location
             }
         }, false);
+
+        // Close Modal
+        const closeModal = () => {
+            modal.style.display = "none";
+            // TODO reset values
+        }
+
+        $('.close').click(() => {
+            closeModal();
+        });
+
+        window.onclick = (e) => {
+            if (e.target === modal) {   // works because modal fills the screen
+                closeModal();
+            }
+        }
+
+        eventHandlersHaveBeenSetup = true;
     }
+
 </script>
 
 <jsp:include page="../include/footer.jsp"/>
